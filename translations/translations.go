@@ -12,8 +12,6 @@ import (
 func init() {
 	//We are making sure to add english first, since it's the default.
 	DefaultTranslation = initLithuanianTranslation()
-	initEnglishTranslation()
-	initGermanTranslation()
 }
 
 var translationRegistry = make(map[string]Translation)
