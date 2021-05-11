@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <title>Scribble.rs - Join Lobby</title>
-    {{$description := (print "Space for up to " .MaxPlayers " players accross " .Rounds " rounds.") }}
+    <title>Prisijungti į kambarį</title>
+    {{$description := (print "Telpa" .MaxPlayers " žaidėjų " .Rounds " roundam.") }}
 
     <meta name="title" content="Scribble.rs - Join Lobby">
     <meta name="description" content="{{$description}}">
@@ -26,8 +26,8 @@
 <body>
     <div class="content-wrapper">
         <h1 class="error-title">(◕︿◕✿)</h1>
-        <h2 class="error-message">You can NOT join the lobby with this browser.</h2>
-        <a class="go-back" href="{{.RootPath}}/">Click here to get back to the Homepage</a>
+        <h2 class="error-message">Nera galimybės prisijungti naudojantis šia naršykle..</h2>
+        <a class="go-back" href="{{.RootPath}}/">Spauskite čia, grįžti į pagrindinį puslapį.</a>
         {{template "footer" .}}
     </div>
 </body>
