@@ -14,8 +14,8 @@ import (
 //This file contains the API methods for the public API
 
 var (
-	ErrNoLobbyIDSupplied = errors.New("please supply a lobby id via the 'lobby_id' query parameter")
-	ErrLobbyNotExistent  = errors.New("the requested lobby doesn't exist")
+	ErrNoLobbyIDSupplied = errors.New("privalote įvesti kambario id 'lobby_id' į reikiamą lauką")
+	ErrLobbyNotExistent  = errors.New("kambarys neegzistuoja")
 )
 
 // LobbyEntry is an API object for representing a join-able public lobby.
@@ -150,7 +150,7 @@ func enterLobby(w http.ResponseWriter, r *http.Request) {
 
 		if player == nil {
 			if !lobby.HasFreePlayerSlot() {
-				http.Error(w, "lobby already full", http.StatusUnauthorized)
+				http.Error(w, "kambarys pilnas", http.StatusUnauthorized)
 				return
 			}
 
@@ -160,7 +160,7 @@ func enterLobby(w http.ResponseWriter, r *http.Request) {
 				if otherPlayer.GetLastKnownAddress() == requestAddress {
 					clientsWithSameIP++
 					if clientsWithSameIP >= lobby.ClientsPerIPLimit {
-						http.Error(w, "maximum amount of newPlayer per IP reached", http.StatusUnauthorized)
+						http.Error(w, "pasiektas maksimalus žaidėjų skaičius iš vieno IP adreso", http.StatusUnauthorized)
 						return
 					}
 				}
@@ -194,7 +194,7 @@ func enterLobby(w http.ResponseWriter, r *http.Request) {
 func editLobby(w http.ResponseWriter, r *http.Request) {
 	userSession := GetUserSession(r)
 	if userSession == "" {
-		http.Error(w, "no usersession supplied", http.StatusBadRequest)
+		http.Error(w, "nepateikta vartotojo sesija", http.StatusBadRequest)
 		return
 	}
 
@@ -207,10 +207,10 @@ func editLobby(w http.ResponseWriter, r *http.Request) {
 
 	//Uneditable properties
 	if r.Form.Get("custom_words") != "" {
-		requestErrors = append(requestErrors, "can't modify custom_words in existing lobby")
+		requestErrors = append(requestErrors, "Negalima tinkinti pasirinktinų žodžių jau esamam kambarį.")
 	}
 	if r.Form.Get("language") != "" {
-		requestErrors = append(requestErrors, "can't modify language in existing lobby")
+		requestErrors = append(requestErrors, "Keisti kalbos negalima esamam kambarį.")
 	}
 
 	parseError := r.ParseForm()
@@ -229,7 +229,7 @@ func editLobby(w http.ResponseWriter, r *http.Request) {
 
 	owner := lobby.Owner
 	if owner == nil || owner.GetUserSession() != userSession {
-		http.Error(w, "only the lobby owner can edit the lobby", http.StatusForbidden)
+		http.Error(w, "Tik šio kambario kūrėjas gali keisti nustatymus", http.StatusForbidden)
 		return
 	}
 
@@ -244,7 +244,7 @@ func editLobby(w http.ResponseWriter, r *http.Request) {
 	} else {
 		currentRound := lobby.Round
 		if rounds < currentRound {
-			requestErrors = append(requestErrors, fmt.Sprintf("rounds must be greater than or equal to the current round (%d)", currentRound))
+			requestErrors = append(requestErrors, fmt.Sprintf("raundų skaičius turi buti didesnis arba lygus esamam raundų skaičiui: (%d)", currentRound))
 		}
 	}
 	if customWordChanceInvalid != nil {
@@ -287,7 +287,7 @@ func editLobby(w http.ResponseWriter, r *http.Request) {
 
 		lobbySettingsCopy := *lobby.EditableLobbySettings
 		lobbySettingsCopy.DrawingTime = drawingTime
-		lobby.TriggerUpdateEvent("lobby-settings-changed", lobbySettingsCopy)
+		lobby.TriggerUpdateEvent("kambario nustatymai pakeisti", lobbySettingsCopy)
 	})
 }
 
@@ -316,7 +316,7 @@ func lobbyEndpoint(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == http.MethodPost || r.Method == http.MethodPut {
 		createLobby(w, r)
 	} else {
-		http.Error(w, fmt.Sprintf("method %s not supported", r.Method), http.StatusMethodNotAllowed)
+		http.Error(w, fmt.Sprintf("būdas %s nepalaikomas", r.Method), http.StatusMethodNotAllowed)
 	}
 }
 
