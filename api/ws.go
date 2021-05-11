@@ -26,7 +26,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 		//This issue can happen if you illegally request a websocket
 		//connection without ever having had a usersession or your
 		//client having deleted the usersession cookie.
-		http.Error(w, "you don't have access to this lobby;usersession not set", http.StatusUnauthorized)
+		http.Error(w, "jūs neturi priegos prie šio kambario;usersession not set", http.StatusUnauthorized)
 		return
 	}
 
@@ -39,7 +39,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	lobby.Synchronized(func() {
 		player := lobby.GetPlayer(sessionCookie)
 		if player == nil {
-			http.Error(w, "you don't have access to this lobby;usersession unknown", http.StatusUnauthorized)
+			http.Error(w, "jūs neturi priegos prie šio kambario;usersession unknown", http.StatusUnauthorized)
 			return
 		}
 
@@ -49,7 +49,7 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		log.Printf("%s(%s) has connected\n", player.Name, player.ID)
+		log.Printf("%s(%s) katik prisijungė\n", player.Name, player.ID)
 
 		player.SetWebsocket(ws)
 		lobby.OnPlayerConnectUnsynchronized(player)
@@ -69,7 +69,7 @@ func wsListen(lobby *game.Lobby, player *game.Player, socket *websocket.Conn) {
 	defer func() {
 		err := recover()
 		if err != nil {
-			log.Printf("Error occurred in wsListen.\n\tError: %s\n\tPlayer: %s(%s)\nStack %s\n", err, player.Name, player.ID, string(debug.Stack()))
+			log.Printf("įvyko klaida wsListen.\n\tError: %s\n\tPlayer: %s(%s)\nStack %s\n", err, player.Name, player.ID, string(debug.Stack()))
 			lobby.OnPlayerDisconnect(player)
 		}
 	}()
@@ -86,7 +86,7 @@ func wsListen(lobby *game.Lobby, player *game.Player, socket *websocket.Conn) {
 				return
 			}
 
-			log.Printf("Error reading from socket: %s\n", err)
+			log.Printf("klaida nuskaitant iš socket: %s\n", err)
 			//If the error doesn't seem fatal we attempt listening for more messages.
 			continue
 		}
@@ -96,7 +96,7 @@ func wsListen(lobby *game.Lobby, player *game.Player, socket *websocket.Conn) {
 			err := json.Unmarshal(data, received)
 			if err != nil {
 				log.Printf("Error unmarshalling message: %s\n", err)
-				sendError := WriteJSON(player, game.GameEvent{Type: "system-message", Data: fmt.Sprintf("An error occurred trying to read your request, please report the error via GitHub: %s!", err)})
+				sendError := WriteJSON(player, game.GameEvent{Type: "system-message", Data: fmt.Sprintf("Įvyko nenumatyta klaida,praneškite į GitHub: %s!", err)})
 				if sendError != nil {
 					log.Printf("Error sending errormessage: %s\n", sendError)
 				}
@@ -119,7 +119,7 @@ func WriteJSON(player *game.Player, object interface{}) error {
 
 	socket := player.GetWebsocket()
 	if socket == nil || !player.Connected {
-		return errors.New("player not connected")
+		return errors.New("žaidėjas neprisijunge")
 	}
 
 	return socket.WriteJSON(object)
