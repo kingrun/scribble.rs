@@ -16,7 +16,7 @@ func initLithuanianTranslation() Translation {
 	translation.put("randomize", "Atsitiktinis")
 	translation.put("apply", "Patvirtinti")
 	translation.put("save", "Išsaugoti")
-	translation.put("votekick-a-player", "Balsuoti išspristi žaidėją")
+	translation.put("votekick-a-player", "Balsuoti išspirti žaidėją")
 	translation.put("time-left", "Laikas")
 
 	translation.put("last-turn", "(Paskutinis ėjimas: %s)")
@@ -60,7 +60,7 @@ func initLithuanianTranslation() Translation {
 	translation.put("correct-guess", "Jūs teisingai atspėjote žodį.")
 	translation.put("correct-guess-other-player", "%s teisingai atspėjo žodį.")
 	translation.put("round-over", "Ėjimas baigtas, nebuvo pasirinktas žodis.")
-	translation.put("round-over-no-word", "ĖJimas baigtas, žodis buvo '%s'.")
+	translation.put("round-over-no-word", "Ėjimas baigtas, žodis buvo '%s'.")
 	translation.put("game-over-win", "Sveikiname. Jūs laimėjote!")
 	translation.put("game-over", "Jūsu vieta %s. su %s taškais")
 
