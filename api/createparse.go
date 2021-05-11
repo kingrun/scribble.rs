@@ -14,7 +14,7 @@ import (
 func ParsePlayerName(value string) (string, error) {
 	trimmed := strings.TrimSpace(value)
 	if trimmed == "" {
-		return trimmed, errors.New("the player name must not be empty")
+		return trimmed, errors.New("vardo laukas negali būti tuščias.")
 	}
 
 	return trimmed, nil
@@ -28,21 +28,21 @@ func ParseLanguage(value string) (string, error) {
 		}
 	}
 
-	return "", errors.New("the given language doesn't match any supported language")
+	return "", errors.New("pasirinkta kalba nepalaikoma")
 }
 
 func ParseDrawingTime(value string) (int, error) {
 	result, parseErr := strconv.ParseInt(value, 10, 64)
 	if parseErr != nil {
-		return 0, errors.New("the drawing time must be numeric")
+		return 0, errors.New("piešimo laikas turi susidaryti iš skaičių")
 	}
 
 	if result < game.LobbySettingBounds.MinDrawingTime {
-		return 0, fmt.Errorf("drawing time must not be smaller than %d", game.LobbySettingBounds.MinDrawingTime)
+		return 0, fmt.Errorf("piešimo laikas negali būti mažesnis nei %d", game.LobbySettingBounds.MinDrawingTime)
 	}
 
 	if result > game.LobbySettingBounds.MaxDrawingTime {
-		return 0, fmt.Errorf("drawing time must not be greater than %d", game.LobbySettingBounds.MaxDrawingTime)
+		return 0, fmt.Errorf("peišimo laikas negali būti didesnis nei %d", game.LobbySettingBounds.MaxDrawingTime)
 	}
 
 	return int(result), nil
@@ -51,15 +51,15 @@ func ParseDrawingTime(value string) (int, error) {
 func ParseRounds(value string) (int, error) {
 	result, parseErr := strconv.ParseInt(value, 10, 64)
 	if parseErr != nil {
-		return 0, errors.New("the rounds amount must be numeric")
+		return 0, errors.New("raundai turi susidaryti iš skaičių")
 	}
 
 	if result < game.LobbySettingBounds.MinRounds {
-		return 0, fmt.Errorf("rounds must not be smaller than %d", game.LobbySettingBounds.MinRounds)
+		return 0, fmt.Errorf("raundų skaičius negali būti mažesnis nei %d", game.LobbySettingBounds.MinRounds)
 	}
 
 	if result > game.LobbySettingBounds.MaxRounds {
-		return 0, fmt.Errorf("rounds must not be greater than %d", game.LobbySettingBounds.MaxRounds)
+		return 0, fmt.Errorf("raundų skaičius negali būti didesnis nei %d", game.LobbySettingBounds.MaxRounds)
 	}
 
 	return int(result), nil
@@ -68,15 +68,15 @@ func ParseRounds(value string) (int, error) {
 func ParseMaxPlayers(value string) (int, error) {
 	result, parseErr := strconv.ParseInt(value, 10, 64)
 	if parseErr != nil {
-		return 0, errors.New("the max players amount must be numeric")
+		return 0, errors.New("žaidėjų kiekis turi susidaryti iš skaičių")
 	}
 
 	if result < game.LobbySettingBounds.MinMaxPlayers {
-		return 0, fmt.Errorf("maximum players must not be smaller than %d", game.LobbySettingBounds.MinMaxPlayers)
+		return 0, fmt.Errorf("maximalus žaidėjų skaičius turi būti ne mažesnins nei %d", game.LobbySettingBounds.MinMaxPlayers)
 	}
 
 	if result > game.LobbySettingBounds.MaxMaxPlayers {
-		return 0, fmt.Errorf("maximum players must not be greater than %d", game.LobbySettingBounds.MaxMaxPlayers)
+		return 0, fmt.Errorf("maximalus žaidėjų skaičius turi būti ne didesnis nei %d", game.LobbySettingBounds.MaxMaxPlayers)
 	}
 
 	return int(result), nil
@@ -93,7 +93,7 @@ func ParseCustomWords(value string) ([]string, error) {
 	for index, item := range result {
 		trimmedItem := lowercaser.String(strings.TrimSpace(item))
 		if trimmedItem == "" {
-			return nil, errors.New("custom words must not be empty")
+			return nil, errors.New("papildomų žodžių laukas negali būti tuščias")
 		}
 		result[index] = trimmedItem
 	}
@@ -104,15 +104,15 @@ func ParseCustomWords(value string) ([]string, error) {
 func ParseClientsPerIPLimit(value string) (int, error) {
 	result, parseErr := strconv.ParseInt(value, 10, 64)
 	if parseErr != nil {
-		return 0, errors.New("the clients per IP limit must be numeric")
+		return 0, errors.New("maximalus žaidėjų kiekis per IP turi susidaryti iš skaičių")
 	}
 
 	if result < game.LobbySettingBounds.MinClientsPerIPLimit {
-		return 0, fmt.Errorf("the clients per IP limit must not be lower than %d", game.LobbySettingBounds.MinClientsPerIPLimit)
+		return 0, fmt.Errorf("žaidėjų per IP kiekis negali būti mažesnis nei %d", game.LobbySettingBounds.MinClientsPerIPLimit)
 	}
 
 	if result > game.LobbySettingBounds.MaxClientsPerIPLimit {
-		return 0, fmt.Errorf("the clients per IP limit must not be higher than %d", game.LobbySettingBounds.MaxClientsPerIPLimit)
+		return 0, fmt.Errorf("žaidėjų per IP kiekis negali būti didesnis nei %d", game.LobbySettingBounds.MaxClientsPerIPLimit)
 	}
 
 	return int(result), nil
@@ -121,15 +121,15 @@ func ParseClientsPerIPLimit(value string) (int, error) {
 func ParseCustomWordsChance(value string) (int, error) {
 	result, parseErr := strconv.ParseInt(value, 10, 64)
 	if parseErr != nil {
-		return 0, errors.New("the custom word chance must be numeric")
+		return 0, errors.New("papildomų žodžių šansas vedamas skaičiais")
 	}
 
 	if result < 0 {
-		return 0, errors.New("custom word chance must not be lower than 0")
+		return 0, errors.New("papildomų žodžių šansas negali būti mažesnis nei 0")
 	}
 
 	if result > 100 {
-		return 0, errors.New("custom word chance must not be higher than 100")
+		return 0, errors.New("papildomų žodžių šansas negali būti didesnis nei 100")
 	}
 
 	return int(result), nil
