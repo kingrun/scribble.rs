@@ -37,7 +37,7 @@ func createDefaultLobbyCreatePageData() *LobbyCreatePageData {
 		CustomWordsChance: "50",
 		ClientsPerIPLimit: "5",
 		EnableVotekick:    "true",
-		Language:          "lietuviškai",
+		Language:          "lithuanian",
 	}
 }
 
