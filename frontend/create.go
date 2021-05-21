@@ -30,14 +30,14 @@ func createDefaultLobbyCreatePageData() *LobbyCreatePageData {
 		BasePageConfig:    currentBasePageConfig,
 		SettingBounds:     game.LobbySettingBounds,
 		Languages:         game.SupportedLanguages,
-		Public:            "false",
-		DrawingTime:       "120",
+		Public:            "true",
+		DrawingTime:       "180",
 		Rounds:            "4",
 		MaxPlayers:        "12",
 		CustomWordsChance: "50",
-		ClientsPerIPLimit: "1",
+		ClientsPerIPLimit: "5",
 		EnableVotekick:    "true",
-		Language:          "english",
+		Language:          "lithuanian",
 	}
 }
 
