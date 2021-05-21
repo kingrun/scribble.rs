@@ -19,7 +19,7 @@ var (
 		"german":     "de",
 		"french":     "fr",
 		"dutch":      "nl",
-		"lietuviškai":	"lt",
+		"lithuanian":	"lt",
 	}
 
 	//go:embed words/*
