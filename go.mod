@@ -9,6 +9,6 @@ require (
 	github.com/gofrs/uuid v4.0.0+incompatible
 	github.com/gorilla/websocket v1.4.2
 	github.com/kennygrant/sanitize v1.2.4
-	golang.org/x/net v0.0.0-20210220033124-5f55cee0dc0d // indirect
-	golang.org/x/text v0.3.5
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/text v0.13.0
 )
